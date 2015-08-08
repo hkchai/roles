@@ -1,5 +1,7 @@
 # Roles And Permissions For Laravel 5
 
+NOTE: I(hkchai) have made some modification on this package
+
 Powerful package for handling roles and permissions in Laravel 5 (5.1 and also 5.0).
 
 - [Installation](#installation)
@@ -71,12 +73,15 @@ Add the package to your application service providers in `config/app.php` file.
 
 ### Config File And Migrations
 
-Publish the package config file and migrations to your application. Run these commands inside your terminal.
+Publish the package config file by running the following command inside your terminal.
 
     php artisan vendor:publish --provider="Bican\Roles\RolesServiceProvider" --tag=config
-    php artisan vendor:publish --provider="Bican\Roles\RolesServiceProvider" --tag=migrations
 
-And also run migrations.
+[NEW] Run the following command to create the migration file.
+    
+    php artisan roles:migration
+
+After this, run migrations to start the database migration.
 
     php artisan migrate
 
