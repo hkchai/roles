@@ -46,7 +46,7 @@ class RolesMigrationCommand extends Command
         $tgt = base_path('/database/migrations/');
         
         self::copy_r($src, $tgt);
-        echo "Done copying migration files\n";
+        $this->info("Done copying migration files");
     }
 
     public function copy_r($src_t, $tgt_t)
@@ -101,14 +101,9 @@ class RolesMigrationCommand extends Command
 
             }
         } else {
-            // Not directory
-
-            $file_components = explode(DS, $src);
-
-            $cnt = count($file_components);
-
-            $file = $file_components[$cnt-1];
-            $tgtfile = $tgt.DS.$file;
+            // src is a file, not directory
+            
+            $tgtfile = $tgt.DS.basename($src);
 
             if (!is_dir($tgt)) {
                 // File to file
