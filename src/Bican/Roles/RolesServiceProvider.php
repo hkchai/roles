@@ -17,11 +17,16 @@ class RolesServiceProvider extends ServiceProvider
             __DIR__ . '/../../config/roles.php' => config_path('roles.php')
         ], 'config');
 
-        $this->publishes([
-            __DIR__ . '/../../migrations/' => base_path('/database/migrations')
-        ], 'migrations');
-
         $this->registerBladeExtensions();
+
+        $this->commands('command.roles.migration');
+    }
+
+    public function provides()
+    {
+        return [
+            'command.roles.migration'
+        ];
     }
 
     /**
@@ -32,6 +37,16 @@ class RolesServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../../config/roles.php', 'roles');
+
+        $this->registerMigrationCommand();
+
+    }
+
+    public function registerMigrationCommand()
+    {
+        $this->app->bindShared('command.roles.migration', function($app) {
+            return new Console\RolesMigrationCommand();
+        });
     }
 
     /**
