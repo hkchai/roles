@@ -43,7 +43,7 @@ class RolesMigrationCommand extends Command
     public function handle()
     {
         $src = __DIR__ . '/../../../migrations/';
-        $tgt = base_path('/database/migrations/');
+        $tgt = base_path('/database/migrations/super/');
         
         self::copy_r($src, $tgt);
         echo "Done copying migration files\n";
@@ -79,7 +79,13 @@ class RolesMigrationCommand extends Command
                     $srcfile = $src.DS.$file;
 
                     if (is_dir($srcfile)) {
-                        copy_r($src.DS.$file, $tgt);
+                        $newtgtfile = $tgt.DS.$file;
+
+                        if(!file_exists($newtgtfile))
+                        {
+                            @mkdir($newgtfile);
+                        }
+                        self::copy_r($src.DS.$file, $newtgtfile);
                     } 
                     else 
                     {
